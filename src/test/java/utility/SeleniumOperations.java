@@ -5,13 +5,18 @@ import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import cucumbermap.ConfigReader;
+
 public class SeleniumOperations 
 {
-	public static ChromeDriver driver=null;
+	public static ConfigReader config;
 	
+	public static WebDriver driver=null;
+		
 	public static Hashtable<String, Object> outputParameters= new Hashtable<String,Object>();
 	
 	public static Hashtable<String, Object> browserLaunch(Object[] inputParameters)
@@ -19,12 +24,22 @@ public class SeleniumOperations
 		try 
 		{
 		String key=(String) inputParameters[0];
-		String value=(String) inputParameters[1];
-				System.setProperty(key, value);
+		
+			if (key.equalsIgnoreCase("chrome")) 
+			{
+				config=new ConfigReader();
+				System.setProperty("webdriver.chrome.driver", config.getDriverPathChrome());
 				driver=new ChromeDriver();
 				driver.manage().window().maximize();
 				driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-				
+			}else if (key.equalsIgnoreCase("FF"))
+			{
+				System.setProperty("webdriver.geckodriver.driver",config.getDriverPathChrome());
+				driver=new ChromeDriver();
+				driver.manage().window().maximize();
+				driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+			}
+								
 				outputParameters.put("STATUS", "PASS");
 				outputParameters.put("MESSAGE", "MethodUsed : browserLaunch, Input given : "+inputParameters[0]);
 		} catch (Exception e) 
@@ -34,20 +49,19 @@ public class SeleniumOperations
 		}
 		return outputParameters;
 	}
-	public static Hashtable<String, Object> openApplication(Object[] inputParameters)
+	public static Hashtable<String, Object> openApplication()
 	{
 		try 
 		{
-		String url=(String) inputParameters[0];
-		driver.get(url);
+		driver.get(config.getApplicationUrl());
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		
 		outputParameters.put("STATUS", "PASS");
-		outputParameters.put("MESSAGE", "MethodUsed : openApplication, Input given : "+inputParameters[0]);
+		outputParameters.put("MESSAGE", "MethodUsed : openApplication, Input given : "+config.getApplicationUrl().toString());
 		} catch (Exception e) 
 		{
 			outputParameters.put("STATUS", "FAIL");
-			outputParameters.put("MESSAGE", "MethodUsed : openApplication, Input given : "+inputParameters[0]);
+			outputParameters.put("MESSAGE", "MethodUsed : openApplication, Input given : "+config.getApplicationUrl().toString());
 		}
 		return outputParameters;
 	}
@@ -142,9 +156,8 @@ public class SeleniumOperations
 		//open Application
 		Object [] input2=new Object[1];
 			input2[0]="https://demo.guru99.com/test/newtours/index.php";
-		SeleniumOperations.openApplication(input2);
-		
-		
+		SeleniumOperations.openApplication();
+				
 		//click on register
 		Object [] input3=new Object[1];
 			input3[0]="//*[text()='REGISTER']";

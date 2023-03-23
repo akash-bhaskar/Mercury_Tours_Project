@@ -12,7 +12,7 @@ public class Hookable
 	@Before
 	public void before(Scenario scenario) throws UnknownHostException
 	{
-		HTMLReportGenerator.TestSuiteStart("C:\\Users\\Akash Bhaskar\\Desktop\\Reports\\Mercury_Tours_Project.html", "Mercury_Tours");
+		HTMLReportGenerator.TestSuiteStart("D:\\Automation Support\\Reports\\Mercury_Tours.html", "Mercury_Tours");
 		HTMLReportGenerator.TestCaseStart(scenario.getName(), scenario.getId());
 		System.out.println("-------------Test Scenario Starts---------------");
 	}

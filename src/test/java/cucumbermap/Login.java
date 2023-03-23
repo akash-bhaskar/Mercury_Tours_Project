@@ -11,24 +11,21 @@ import utility.SeleniumOperations;
 public class Login 
 {
 
-	@Given ("^user launches browser by providing \"(.*)\" and \"(.*)\"$")
-	public void bLaunch(String key,String value)
+	@Given ("^user launches browser by providing \"(.*)\" and$")
+	public void bLaunch(String key)
 	{
 	//launch browser
-		Object [] input1=new Object[2];
+		Object [] input1=new Object[1];
 		input1[0]=key;
-		input1[1]=value;
 	Hashtable<String, Object> output1= SeleniumOperations.browserLaunch(input1);
-	HTMLReportGenerator.StepDetails(output1.get("STATUS").toString(), "^user launches browser by providing \"(.*)\" and \"(.*)\"$", output1.get("MESSAGE").toString());
+	HTMLReportGenerator.StepDetails(output1.get("STATUS").toString(), "^user launches browser by providing \"(.*)\" and$", output1.get("MESSAGE").toString());
 	}
-	@Given("user opens application by using {string}")
-	public void user_opens_application_by_using(String string) 
+	@Given ("^user opens application by using$") 
+	public void user_opens_application_by_using() 
 	{
 		//open Application
-		Object [] input2=new Object[1];
-		input2[0]=string;
-		Hashtable<String, Object> output2= SeleniumOperations.openApplication(input2);		
-		HTMLReportGenerator.StepDetails(output2.get("STATUS").toString(), "user opens application by using {string}", output2.get("MESSAGE").toString());
+		Hashtable<String, Object> output2= SeleniumOperations.openApplication();		
+		HTMLReportGenerator.StepDetails(output2.get("STATUS").toString(), "^user opens application by using$", output2.get("MESSAGE").toString());
 	}
 
 	@When("user click on register.")
@@ -44,7 +41,6 @@ public class Login
 	@When("user enters first name as {string}")
 	public void user_enters_first_name_as(String string) 
 	{
-		//enter first name
 		//enter first name
 		Object [] input4=new Object[2];
 		input4[0]="//*[@name='firstName']";

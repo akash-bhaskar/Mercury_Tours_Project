@@ -4,8 +4,8 @@ Feature: Registration functionality
 
 
 Background: Application opens successfully
-Given user launches browser by providing "webdriver.chrome.driver" and "D:\\Automation Support\\Selenium\\chromedriver.exe"
-Given user opens application by using "https://demo.guru99.com/test/newtours/index.php"
+Given user launches browser by providing "chrome" and 
+Given user opens application by using 
 
 
 
